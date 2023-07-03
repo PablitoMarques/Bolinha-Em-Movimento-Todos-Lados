@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <canvas width="600" height="500"></canvas>
+    <script>
+        var tela = document.querySelector("canvas");
+        var pincel = tela.getContext("2d");
+        pincel.fillStyle = "lightgray";
+        pincel.fillRect(0, 0, 600, 500);
+
+        function desenhaCirculo(x, y, raio) {
+            pincel.fillStyle = "blue";
+            pincel.beginPath();
+            pincel.arc(x, y, raio, 0, 2 * Math.PI);
+            pincel.fill();
+        }
+
+        function limpaTela() {
+            pincel.clearRect(0, 0, 600, 500);
+        }
+
+        var x = 20;
+        var y = 20;
+        var raio = 20;
+        var velocidade = 4;
+        var direcao = "direita";
+
+        function atualizaTela() {
+            limpaTela();
+            desenhaCirculo(x, y, raio);
+
+            if (direcao === "direita") {
+                x += velocidade;
+                if (x + raio >= tela.width) {
+                    direcao = "baixo";
+                }
+            } else if (direcao === "baixo") {
+                y += velocidade;
+                if (y + raio >= tela.height) {
+                    direcao = "esquerda";
+                }
+            } else if (direcao === "esquerda") {
+                x -= velocidade;
+                if (x - raio <= 0) {
+                    direcao = "cima";
+                }
+            } else if (direcao === "cima") {
+                y -= velocidade;
+                if (y - raio <= 0) {
+                    direcao = "direita";
+                }
+            }
+        }
+
+        setInterval(atualizaTela, 10);
+    </script>
+</head>
+<body>
+</body>
+</html>
